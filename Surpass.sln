@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surpass.Web", "Surpass.Web\Surpass.Web.csproj", "{2E468A83-81AA-436D-A456-240A3150BFED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Surpass.Domain", "Surpass.Domain", "{33821F93-935A-4F9F-ADEA-366FDE6AA0AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surpass.Entities", "Surpass.Entities\Surpass.Entities.csproj", "{7BCD8AEF-3FA4-43CA-B1F6-7719C41D67B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E468A83-81AA-436D-A456-240A3150BFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E468A83-81AA-436D-A456-240A3150BFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E468A83-81AA-436D-A456-240A3150BFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E468A83-81AA-436D-A456-240A3150BFED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BCD8AEF-3FA4-43CA-B1F6-7719C41D67B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BCD8AEF-3FA4-43CA-B1F6-7719C41D67B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BCD8AEF-3FA4-43CA-B1F6-7719C41D67B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BCD8AEF-3FA4-43CA-B1F6-7719C41D67B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7BCD8AEF-3FA4-43CA-B1F6-7719C41D67B0} = {33821F93-935A-4F9F-ADEA-366FDE6AA0AB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {074CA11B-99E3-4AF6-A057-C3C68DA94251}
+	EndGlobalSection
+EndGlobal
