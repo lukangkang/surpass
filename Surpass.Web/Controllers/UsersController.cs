@@ -4,17 +4,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Surpass.Entities;
-using Surpass.Web.Data;
+using Surpass.Domain.Entities;
+using Surpass.Infrastructure.Database;
 using Surpass.Web.Models;
 
 namespace Surpass.Web.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly SurpassWebContext _context;
+        private readonly EFCoreDbContext _context;
 
-        public UsersController(SurpassWebContext context)
+        public UsersController(EFCoreDbContext context)
         {
             _context = context;
         }

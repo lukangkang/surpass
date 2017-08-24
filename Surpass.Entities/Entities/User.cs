@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Surpass.Entities
+namespace Surpass.Domain.Entities
 {
     public class User
     {

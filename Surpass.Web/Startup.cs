@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Surpass.Web.Data;
-using Surpass.Web.Models;
+using Surpass.Infrastructure.Database;
 
 namespace Surpass.Web
 {
@@ -25,8 +20,8 @@ namespace Surpass.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-
-            services.AddDbContext<SurpassWebContext>(options =>
+            
+            services.AddDbContext<EFCoreDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SurpassWebContext")));
         }
 
