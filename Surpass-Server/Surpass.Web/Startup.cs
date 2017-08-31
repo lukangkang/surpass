@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Surpass.Domain.Entities;
 using Surpass.Infrastructure.Database;
 
 namespace Surpass.Web
@@ -19,10 +21,17 @@ namespace Surpass.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging().AddLocalization();
+
+            //services.AddDbContext<EFCoreDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("EFCoreDbContext")));
+
+            //services.AddIdentity<User, IdentityRole>()
+            //    .AddEntityFrameworkStores<EFCoreDbContext>()
+            //    .AddDefaultTokenProviders();
+
             services.AddMvc();
-            
-            services.AddDbContext<EFCoreDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SurpassWebContext")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

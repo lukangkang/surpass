@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Mime;
 using Surpass.Domain.Services.Interface;
+using Surpass.Domain.Uow.Interfaces;
 using Surpass.Infrastructure.Database;
 
 namespace Surpass.Repository

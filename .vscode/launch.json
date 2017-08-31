@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceRoot}/Surpass.Web/bin/Debug/netcoreapp2.0/Surpass.Web.dll",
+            "program": "${workspaceRoot}/Surpass-Server/Surpass.Web/bin/Debug/netcoreapp2.0/Surpass.Web.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/Surpass.Web",
+            "cwd": "${workspaceRoot}/Surpass-Server/Surpass.Web",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {
