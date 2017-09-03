@@ -1,28 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Mime;
+using System.Linq;
 using System.Threading;
+using Microsoft.Extensions.DependencyInjection;
+using Surpass.Database;
 using Surpass.Domain.Filters.Interfaces;
 using Surpass.Domain.Uow.Interfaces;
+using Surpass.Infrastructure.Database;
+using SurpassStandard.Collections;
+using SurpassStandard.Dependency;
 
-namespace Surpass.Domain.Uow {
-	/// <summary>
-	/// 工作单元
-	/// 工作单元用于在一个区域中共享数据库上下文和事务
-	/// 工作单元支持过滤器，这是对框架中的数据事件的补充，但不同的是
-	/// - 工作单元过滤器用于处理拥有某一特征(例如有创建时间)的所有实体，可以在一定的范围内启用和禁用
-	/// - 数据事件用于处理某一类型的实体，全局一直有效且不能禁用
-	/// </summary>
-	[ExportMany, SingletonReuse]
-	public class UnitOfWork : IUnitOfWork {
-		/// <summary>
-		/// 同一个工作单元区域使用的数据
-		/// </summary>
-		private class ScopeData : IDisposable {
-			/// <summary>
-			/// 数据库上下文
-			/// </summary>
-			public IDatabaseContext Context { get; set; }
+namespace Surpass.Domain.Uow
+{
+    /// <summary>
+    /// 工作单元
+    /// 工作单元用于在一个区域中共享数据库上下文和事务
+    /// 工作单元支持过滤器，这是对框架中的数据事件的补充，但不同的是
+    /// - 工作单元过滤器用于处理拥有某一特征(例如有创建时间)的所有实体，可以在一定的范围内启用和禁用
+    /// - 数据事件用于处理某一类型的实体，全局一直有效且不能禁用
+    /// </summary>
+    [ExportMany, Singleton]
+    public class UnitOfWork : IUnitOfWork
+    {
+        /// <summary>
+        /// 同一个工作单元区域使用的数据
+        /// </summary>
+        private class ScopeData : IDisposable
+        {
+            /// <summary>
+            /// 数据库上下文
+            /// </summary>
+            public IDatabaseContext Context { get; set; }
 			/// <summary>
 			/// 默认的查询过滤器
 			/// </summary>
@@ -32,20 +40,21 @@ namespace Surpass.Domain.Uow {
 			/// </summary>
 			public IList<IEntityOperationFilter> OperationFilters { get; set; }
 
-			/// <summary>
-			/// 初始化
-			/// </summary>
-			public ScopeData() {
-				var databaseManager = MediaTypeNames.Application.Ioc.Resolve<DatabaseManager>();
-				Context = databaseManager.CreateContext();
-				QueryFilters = MediaTypeNames.Application.Ioc.ResolveMany<IEntityQueryFilter>().ToList();
-				OperationFilters = MediaTypeNames.Application.Ioc.ResolveMany<IEntityOperationFilter>().ToList();
-			}
+		    /// <summary>
+		    /// 初始化
+		    /// </summary>
+		    public ScopeData()
+		    {
+		        var databaseManager = Application.Ioc.GetService<DatabaseManager>();
+		        Context = databaseManager.CreateContext();
+		        QueryFilters = Application.Ioc.GetServices<IEntityQueryFilter>().ToList();
+		        OperationFilters = Application.Ioc.GetServices<IEntityOperationFilter>().ToList();
+		    }
 
-			/// <summary>
-			/// 释放数据
-			/// </summary>
-			~ScopeData() {
+            /// <summary>
+            /// 释放数据
+            /// </summary>
+            ~ScopeData() {
 				Dispose();
 			}
 

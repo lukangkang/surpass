@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Mime;
+using Microsoft.Extensions.DependencyInjection;
 using Surpass.Domain.Services.Interface;
 using Surpass.Domain.Uow.Interfaces;
 using Surpass.Infrastructure.Database;
+using Surpass.Domain.Uow.Extensions;
 
 namespace Surpass.Repository
 {
@@ -15,11 +16,7 @@ namespace Surpass.Repository
         /// <summary>
         /// 获取工作单元
         /// </summary>
-        protected virtual IUnitOfWork UnitOfWork
-        {
-            get { return null; }
-            //return .Application.Ioc.Resolve<IUnitOfWork>(); 
-        }
+        protected virtual IUnitOfWork UnitOfWork => Application.Ioc.GetService<IUnitOfWork>();
 
         /// <summary>
         /// 查询实体

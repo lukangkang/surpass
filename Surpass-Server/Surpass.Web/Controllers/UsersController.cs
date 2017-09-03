@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Surpass.Domain.Entities;
 using Surpass.Infrastructure.Database;
+using Surpass.ORM.EFCore;
 using Surpass.Web.Models;
 
 namespace Surpass.Web.Controllers

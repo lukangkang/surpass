@@ -24,9 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Surpass.App\Surpass.App.csproj" />
-    <ProjectReference Include="..\Surpass.Entities\Surpass.Domain.csproj" />
-    <ProjectReference Include="..\Surpass.Infrastructure\Surpass.Infrastructure.csproj" />
-    <ProjectReference Include="..\Surpass.Repository\Surpass.Repository.csproj" />
+    <ProjectReference Include="..\Surpass.ORM.EFCore\Surpass.ORM.EFCore.csproj" />
+    <ProjectReference Include="..\Surpass\Surpass.csproj" />
   </ItemGroup>
 
 </Project>

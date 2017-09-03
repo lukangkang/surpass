@@ -1,5 +1,7 @@
 ﻿using System;
+using Surpass.Domain.Entities.Interfaces;
 using Surpass.Domain.Filters.Interfaces;
+using SurpassStandard.Dependency;
 
 namespace Surpass.Domain.Filters {
 	/// <summary>

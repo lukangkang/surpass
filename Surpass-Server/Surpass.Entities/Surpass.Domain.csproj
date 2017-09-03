@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Surpass.Infrastructure\Surpass.Infrastructure.csproj" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SurpassStandard\SurpassStandard.csproj" />
+    <ProjectReference Include="..\Surpass\Surpass.csproj" />
   </ItemGroup>
 
 </Project>

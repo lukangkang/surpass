@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Surpass.Domain.Entities;
 
-namespace Surpass.Infrastructure.Database
+namespace Surpass.ORM.EFCore
 {
     public class EFCoreDbContext : DbContext
     {

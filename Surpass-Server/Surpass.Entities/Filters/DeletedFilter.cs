@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Surpass.Domain.Entities.Interfaces;
+using Surpass.Domain.Entities.TypeTraits;
 using Surpass.Domain.Filters.Interfaces;
+using SurpassStandard.Dependency;
 
 namespace Surpass.Domain.Filters {
 	/// <summary>

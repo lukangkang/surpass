@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Surpass.Web.Models;
 
 namespace Surpass.Web.Controllers
@@ -12,6 +13,7 @@ namespace Surpass.Web.Controllers
     {
         public IActionResult Index()
         {
+            
             return View();
         }
 

@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Surpass.Infrastructure\Surpass.Infrastructure.csproj" />
+    <ProjectReference Include="..\Surpass.Entities\Surpass.Domain.csproj" />
+    <ProjectReference Include="..\Surpass\Surpass.csproj" />
   </ItemGroup>
 
 </Project>
