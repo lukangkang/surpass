@@ -24,5 +24,5 @@
   ### 讨论：
 
 - [提交issue](https://github.com/lukangkang/surpass/issues/new)
-- 邮箱: 1157219723@qq.com
+- 邮箱: 3550782260@qq.com
 
