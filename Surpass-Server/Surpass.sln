@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.领域层（Domain）", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.基础设施层（Infrastructure）", "4.基础设施层（Infrastructure）", "{9678D0A1-8A1C-4C73-A762-4955E72289FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurpassStandard", "..\SurpassStandard\SurpassStandard.csproj", "{0AEFB330-5D1A-416C-9855-A549FB43633C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurpassStandard", "SurpassStandard\SurpassStandard.csproj", "{0AEFB330-5D1A-416C-9855-A549FB43633C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

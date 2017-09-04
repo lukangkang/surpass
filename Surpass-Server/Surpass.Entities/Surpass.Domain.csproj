@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SurpassStandard\SurpassStandard.csproj" />
+    <ProjectReference Include="..\SurpassStandard\SurpassStandard.csproj" />
     <ProjectReference Include="..\Surpass\Surpass.csproj" />
   </ItemGroup>
 

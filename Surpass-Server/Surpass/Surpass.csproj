@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SurpassStandard\SurpassStandard.csproj" />
+    <ProjectReference Include="..\SurpassStandard\SurpassStandard.csproj" />
   </ItemGroup>
 
 </Project>
