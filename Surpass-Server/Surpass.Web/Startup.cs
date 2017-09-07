@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Surpass.Database;
-using Surpass.Domain.Entities;
-using Surpass.Infrastructure.Database;
 
 namespace Surpass.Web
 {
@@ -25,7 +24,14 @@ namespace Surpass.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddLogging().AddLocalization();
+            services.AddLocalization();
+            services.AddLogging(builder =>
+            {
+                builder
+                    .AddConfiguration(Configuration.GetSection("Logging"))
+                    .AddFilter("Microsoft", LogLevel.Warning)
+                    .AddConsole();
+            });
 
             //services.AddDbContext<EFCoreDbContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("EFCoreDbContext")));
@@ -33,12 +39,19 @@ namespace Surpass.Web
             //services.AddIdentity<User, IdentityRole>()
             //    .AddEntityFrameworkStores<EFCoreDbContext>()
             //    .AddDefaultTokenProviders();
+            var a = new TokenValidationParameters();
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters=
+            //})
 
             services.AddMvc();
             services.AddLogging();
 
             services.AddOptions();
             services.Configure<List<DatabaseOption>>(Configuration.GetSection("OtherDatabases"));
+
+            Application.Initialize("");
 
             return services.BuildServiceProvider();
         }
@@ -57,6 +70,7 @@ namespace Surpass.Web
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

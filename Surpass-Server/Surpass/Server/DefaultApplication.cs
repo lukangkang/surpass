@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Surpass.Database;
 using Surpass.Infrastructure.Server;
+using Surpass.Storage;
 
 namespace Surpass.Server
 {
@@ -18,10 +19,11 @@ namespace Surpass.Server
         /// 
         /// </summary>
         public virtual Version Version { get; }
+
         /// <summary>
         /// 
         /// </summary>
-        public virtual IServiceCollection services { get; }
+        public virtual IServiceCollection services => new ServiceCollection();
 
         /// <summary>
         ///  The MicroDI Container Instance
@@ -53,6 +55,9 @@ namespace Surpass.Server
         protected virtual void InitializeContainer()
         {
             services.AddSingleton<DatabaseManager>();
+
+            services.AddSingleton<LocalPathConfig>();
+            services.AddSingleton<LocalPathManager>();
         }
 
         /// <summary>
@@ -63,8 +68,8 @@ namespace Surpass.Server
             Ioc.GetService<DatabaseManager>().Initialize();
         }
 
+        /// <inheritdoc />
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="websiteRootDirectory"></param>
         public void Initialize(string websiteRootDirectory)
@@ -84,7 +89,6 @@ namespace Surpass.Server
                 Console.WriteLine(e);
                 throw;
             }
-            services.AddSingleton<DatabaseManager>();
         }
 
         public void OnRequest(IHttpContextAccessor context)

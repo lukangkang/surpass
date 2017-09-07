@@ -6,11 +6,12 @@ using SurpassStandard.Extensions;
 using ZKWeb.Plugin.AssemblyLoaders;
 
 namespace Surpass.Plugin.AssemblyLoaders {
+	/// <inheritdoc />
 	/// <summary>
-	/// Assembly loader for .Net Framework<br/>
-	/// .Net Framework使用的程序集加载器<br/>
+	/// Assembly loader for .Net Framework<br />
+	/// .Net Framework使用的程序集加载器<br />
 	/// </summary>
-	internal class NetAssemblyLoader : AssemblyLoaderBase {
+	internal sealed class NetAssemblyLoader : AssemblyLoaderBase {
 		/// <summary>
 		/// Possible assembly name suffixes<br/>
 		/// Use to load assemblies by short name<br/>

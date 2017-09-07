@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace Surpass.Web.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.FindAsync<List<User>>());
         }
 
         // GET: Users/Details/5
@@ -34,8 +35,7 @@ namespace Surpass.Web.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var user = await _context.FindAsync<User>(new {id = id});
             if (user == null)
             {
                 return NotFound();
@@ -75,7 +75,7 @@ namespace Surpass.Web.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
+            var user = await _context.FindAsync<User>(new { id = id });
             if (user == null)
             {
                 return NotFound();
@@ -126,8 +126,7 @@ namespace Surpass.Web.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var user = await _context.FindAsync<User>(new { id = id });
             if (user == null)
             {
                 return NotFound();
@@ -141,15 +140,15 @@ namespace Surpass.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var user = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
-            _context.User.Remove(user);
+            var user = await _context.FindAsync<User>(new { id = id });
+            _context.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(Guid id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.FindAsync<User>(new { id = id }) != null;
         }
     }
 }
