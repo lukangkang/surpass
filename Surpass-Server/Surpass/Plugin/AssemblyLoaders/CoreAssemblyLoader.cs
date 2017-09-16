@@ -1,11 +1,12 @@
-﻿#if NETCORE
-using Microsoft.Extensions.DependencyModel;
+﻿//#if NETCORE
+
 using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
-using ZKWebStandard.Extensions;
+using Microsoft.Extensions.DependencyModel;
+using SurpassStandard.Extensions;
 
-namespace ZKWeb.Plugin.AssemblyLoaders {
+namespace Surpass.Plugin.AssemblyLoaders {
 	/// <summary>
 	/// Assembly loader for .Net Core<br/>
 	/// .Net Core使用的程序集加载器<br/>
@@ -80,17 +81,17 @@ namespace ZKWeb.Plugin.AssemblyLoaders {
 					return Assembly.Load(assemblyName);
 				} catch {
 					// if failed, try to load it from reference directory under plugin directory
-					var pluginManager = Application.Ioc.Resolve<PluginManager>();
-					foreach (var plugin in pluginManager.Plugins) {
-						var path = plugin.ReferenceAssemblyPath(assemblyName.Name);
-						if (path != null) {
-							return LoadFromAssemblyPath(path);
-						}
-					}
+					//var pluginManager = Application.Ioc.Resolve<PluginManager>();
+					//foreach (var plugin in pluginManager.Plugins) {
+					//	var path = plugin.ReferenceAssemblyPath(assemblyName.Name);
+					//	if (path != null) {
+					//		return LoadFromAssemblyPath(path);
+					//	}
+					//}
 					throw;
 				}
 			}
 		}
 	}
 }
-#endif
+//#endif

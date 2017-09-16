@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Surpass.Database;
 using Surpass.Infrastructure.Database;
-using ZKWeb.Database;
 
 namespace Surpass.ORM.EFCore
 {

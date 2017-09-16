@@ -28,17 +28,18 @@ namespace Surpass.ORM.EFCore
             ConnectionString = connectionString;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// 配置上下文选项
         /// </summary>
-        /// <param name="optionBuilder"></param>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (Database.Equals("Mssql"))
+            if (DatabaseType.Equals("Mssql"))
             {
                 optionsBuilder.UseSqlServer(ConnectionString, option => option.UseRowNumberForPaging());
             }
-            else if (Database.Equals("Mysql"))
+            else if (DatabaseType.Equals("Mysql"))
             {
                 optionsBuilder.UseMySQL(ConnectionString);
             }

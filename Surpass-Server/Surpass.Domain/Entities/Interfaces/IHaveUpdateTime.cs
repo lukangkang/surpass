@@ -1,5 +1,5 @@
 ﻿using System;
-using Surpass.Infrastructure.Database;
+using Surpass.Database;
 
 namespace Surpass.Domain.Entities.Interfaces {
 	/// <summary>

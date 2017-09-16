@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace SurpassStandard.Dependency
@@ -14,14 +13,15 @@ namespace SurpassStandard.Dependency
     /// <seealso cref="T:System.ComponentModel.IContainer" />
     /// <seealso cref="T:System.ComponentModel.Container" />
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
-    public class SingletonAttribute : ServiceLifeTimeAttribute
+    public class SingletonLifeTimeAttribute : ServiceLifeTimeAttribute
     {
 
 
+        /// <inheritdoc />
         /// <summary>
-        /// Initialize<br/>
-        /// 初始化<br/>
+        /// Initialize<br />
+        /// 初始化<br />
         /// </summary>
-        public SingletonAttribute() : base(ServiceLifetime.Singleton) { }
+        public SingletonLifeTimeAttribute() : base(ServiceLifetime.Singleton) { }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
+using Surpass.Database;
 using Surpass.Domain.Filters.Interfaces;
-using Surpass.Infrastructure.Database;
 using SurpassStandard.Dependency;
 using SurpassStandard.Utils;
 

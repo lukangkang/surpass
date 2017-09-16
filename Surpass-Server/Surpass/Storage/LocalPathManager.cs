@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Surpass.Plugin;
 using SurpassStandard.Utils;
 
 namespace Surpass.Storage
@@ -43,12 +48,19 @@ namespace Surpass.Storage
         /// </summary>
         //protected IKeyValueCache<string, string> ResourcePathCache { get; set; }
 
+        private readonly LocalPathConfig _pathConfig;
+
+        private readonly IOptionsSnapshot<PluginOptions> _pluginOptions;
+
         /// <summary>
         /// Initialize<br/>
         /// 初始化<br/>
         /// </summary>
-        public LocalPathManager()
+        public LocalPathManager(LocalPathConfig pathConfig, IOptionsSnapshot<PluginOptions> pluginOptions)
         {
+            _pathConfig = pathConfig;
+            _pluginOptions = pluginOptions;
+            
             //var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
             //TemplatePathCacheTime = TimeSpan.FromSeconds(
             //    configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.TemplatePathCacheTime, 2));
@@ -70,13 +82,11 @@ namespace Surpass.Storage
         /// 这些路径会用于查找插件<br/>
         /// </summary>
         /// <returns></returns>
-        //public virtual IList<string> GetPluginDirectories()
-        //{
-        //    var pathConfig = Application.Ioc.Resolve<LocalPathConfig>();
-        //    var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
-        //    return configManager.WebsiteConfig.PluginDirectories.Select(p =>
-        //        Path.GetFullPath(Path.Combine(pathConfig.WebsiteRootDirectory, p))).ToList();
-        //}
+        public virtual IList<string> GetPluginDirectories()
+        {
+            return _pluginOptions.Value.Select(p =>
+                Path.GetFullPath(Path.Combine(_pathConfig.WebsiteRootDirectory, p))).ToList();
+        }
 
         /// <summary>
         /// Get template full path candidates<br/>

@@ -44,7 +44,7 @@ namespace Surpass
         ///  The MicroDI Container Instance
         /// MicroDI容器的服务注册实例
         /// </summary>
-        public static IServiceCollection Services => Instance.services;
+        public static IServiceCollection Services => Instance.Services;
 
         /// <summary>
         ///  The MicroDI Container Instance
@@ -56,20 +56,20 @@ namespace Surpass
         /// Intialize application with DefaultApplication<br/>
         /// 初始化默认应用<br/>
         /// </summary>
-        public static void Initialize(string websiteRootDirectory)
+        public static void Initialize(IServiceCollection services, string websiteRootDirectory)
         {
-            Initialize<DefaultApplication>(websiteRootDirectory);
+            Initialize<DefaultApplication>(services, websiteRootDirectory);
         }
 
         /// <summary>
         /// Intialize application with specificed application type<br/>
         /// 初始化指定应用<br/>
         /// </summary>
-        public static void Initialize<TApplication>(string websiteRootDirectory)
+        public static void Initialize<TApplication>(IServiceCollection services, string websiteRootDirectory)
             where TApplication : IApplication, new()
         {
             Instance = new TApplication();
-            Instance.Initialize(websiteRootDirectory);
+            Instance.Initialize(services,websiteRootDirectory);
         }
     }
 }

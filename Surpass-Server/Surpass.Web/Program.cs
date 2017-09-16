@@ -40,36 +40,37 @@ namespace Surpass.Web
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseConfiguration(new ConfigurationBuilder().SetBasePath(GetWebsiteRootDirectory())
-                    .AddJsonFile("appsettings.json", true)
-                    .Build()).ConfigureServices(
-                    x =>
-                    {
-                        Application.Initialize(GetWebsiteRootDirectory());
-                    }).Configure(app =>
-                    {
-                        var env = new HostingEnvironment();
-                        if (env.IsDevelopment())
-                        {
-                            app.UseDeveloperExceptionPage();
-                            app.UseBrowserLink();
-                        }
-                        else
-                        {
-                            app.UseExceptionHandler("/Home/Error");
-                        }
+                //.UseConfiguration(new ConfigurationBuilder().SetBasePath(GetWebsiteRootDirectory())
+                //    .AddJsonFile("appsettings.json", true)
+                //    .Build()).ConfigureServices(
+                //    x =>
+                //    {
+                //        Application.Initialize(GetWebsiteRootDirectory());
+                //    }).Configure(app =>
+                //    {
+                //        var env = new HostingEnvironment();
+                //        if (env.IsDevelopment())
+                //        {
+                //            app.UseDeveloperExceptionPage();
+                //            app.UseBrowserLink();
+                //        }
+                //        else
+                //        {
+                //            app.UseExceptionHandler("/Home/Error");
+                //        }
 
-                        app.UseStaticFiles();
-                        app.UseAuthentication();
+                //        app.UseStaticFiles();
+                //        app.UseAuthentication();
 
-                        app.UseMvc(routes =>
-                        {
-                            routes.MapRoute(
-                                name: "default",
-                                template: "{controller=Home}/{action=Index}/{id?}");
-                        });
-                    })
-                    //.UseStartup<Startup>()
+                //        app.UseMvc(routes =>
+                //        {
+                //            routes.MapRoute(
+                //                name: "default",
+                //                template: "{controller=Home}/{action=Index}/{id?}");
+                //        });
+                //    })
+                .UseUrls("http://*:80")
+                    .UseStartup<Startup>()
                     .Build();
     }
 }

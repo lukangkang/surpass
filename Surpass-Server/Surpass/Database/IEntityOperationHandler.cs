@@ -1,7 +1,6 @@
-﻿using Surpass.Database;
-using ZKWeb.Database;
+﻿using Surpass.Infrastructure.Database;
 
-namespace Surpass.Infrastructure.Database {
+namespace Surpass.Database {
 	/// <summary>
 	/// Interface for handling entity modification and deletion<br/>
 	/// 用于处理实体修改和删除的接口<br/>

@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Surpass.Entities\Surpass.Domain.csproj" />
     <ProjectReference Include="..\Surpass.Repository\Surpass.Repository.csproj" />
     <ProjectReference Include="..\Surpass\Surpass.csproj" />
   </ItemGroup>

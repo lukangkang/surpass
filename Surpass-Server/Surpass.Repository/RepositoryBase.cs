@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.Extensions.DependencyInjection;
+using Surpass.Database;
 using Surpass.Domain.Filters;
 using Surpass.Domain.Interface;
 using Surpass.Domain.Uow.Interfaces;
-using Surpass.Infrastructure.Database;
 using Surpass.Domain.Uow.Extensions;
 using SurpassStandard.Utils;
 
@@ -100,7 +100,7 @@ namespace Surpass.Repository
 
         #endregion
 
-        #region 新增或修改方法
+        #region 插入或更新方法
 
         /// <inheritdoc />
         /// <summary>

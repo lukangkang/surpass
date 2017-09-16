@@ -1,4 +1,4 @@
-﻿using Surpass.Infrastructure.Database;
+﻿using Surpass.Database;
 
 namespace Surpass.Domain.Filters.Interfaces {
 	/// <summary>

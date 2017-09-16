@@ -81,7 +81,8 @@ namespace Surpass.Storage {
 	    /// <returns></returns>
 	    public static bool Zip(this IFileEntry entry, string zipedFile, string password = null)
 	    {
-	        return ZipUtils.ZipFile(entry.UniqueIdentifier, zipedFile, password);
+	        //return ZipUtils.ZipFile(entry.UniqueIdentifier, zipedFile, password);
+	        return true;
 	    }
 
         /// <summary>
@@ -93,7 +94,8 @@ namespace Surpass.Storage {
         /// <returns></returns>
         public static bool UnZip(this IFileEntry entry, string zipedFolder, string password = null)
         {
-            return ZipUtils.UnZip(entry.UniqueIdentifier, zipedFolder, password);
+            //return ZipUtils.UnZip(entry.UniqueIdentifier, zipedFolder, password);
+            return true;
         }
 
     }

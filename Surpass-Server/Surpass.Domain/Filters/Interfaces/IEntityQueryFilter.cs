@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Surpass.Infrastructure.Database;
+using Surpass.Database;
 
 namespace Surpass.Domain.Filters.Interfaces {
 	/// <summary>

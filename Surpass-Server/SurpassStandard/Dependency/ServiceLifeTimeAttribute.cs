@@ -19,12 +19,12 @@ namespace SurpassStandard.Dependency {
 		/// </summary>
 		public ServiceLifetime LifeTimeType { get; set; }
 
-		/// <summary>
-		/// Initialize<br/>
-		/// 初始化<br/>
-		/// </summary>
-		/// <param name="reuseType">Reuse type</param>
-		public ServiceLifeTimeAttribute(ServiceLifetime lifeTimeType) {
+	    /// <summary>
+	    /// Initialize<br/>
+	    /// 初始化<br/>
+	    /// </summary>
+	    /// <param name="lifeTimeType"></param>
+	    public ServiceLifeTimeAttribute(ServiceLifetime lifeTimeType) {
 		    LifeTimeType = lifeTimeType;
 		}
 	}

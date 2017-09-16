@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
-using Surpass.Database;
-using ZKWeb.Database;
+using Surpass.Infrastructure.Database;
 
-namespace Surpass.Infrastructure.Database {
+namespace Surpass.Database {
 	/// <summary>
 	/// Interface for database context<br/>
 	/// 数据库上下文的接口<br/>

@@ -4,12 +4,12 @@ using System.Data;
 using System.FastReflection;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection.Emit;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using Surpass.Domain.Entities;
+using Surpass.Database;
 using Surpass.Infrastructure.Database;
 using SurpassStandard.Utils;
 
@@ -182,6 +182,8 @@ namespace Surpass.ORM.EFCore
             return Set<T>();
         }
 
+        #region 同步查询方法
+
         /// <inheritdoc />
         /// <summary>
         /// Get single entity that matched the given predicate<br />
@@ -205,6 +207,35 @@ namespace Surpass.ORM.EFCore
         {
             return Query<T>().LongCount(predicate);
         }
+
+        #endregion
+
+        #region 异步查询方法
+
+        /// <summary/>
+        /// Get single entity that matched the given predicate<br />
+        /// It should return null if no matched entity found<br />
+        /// 获取符合传入条件的单个实体<br />
+        /// 如果无符合条件的实体应该返回null<br />
+        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : class, IEntity
+        {
+            return await Query<T>().FirstOrDefaultAsync(predicate);
+        }
+
+        /// <summary>
+        /// Get how many entities that matched the given predicate<br />
+        /// 获取符合传入条件的实体数量<br />
+        /// </summary>
+        public async Task<long> CountAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class, IEntity
+        {
+            return await Query<T>().LongCountAsync(predicate);
+        }
+
+
+        #endregion
+
+        #region 同步插入或更新方法
 
         /// <summary>
         /// Insert or update entity<br/>
@@ -245,6 +276,9 @@ namespace Surpass.ORM.EFCore
                 // It's being tracked, we don't need to attach it
             }
         }
+
+
+
 
         /// <inheritdoc />
         /// <summary>
@@ -301,6 +335,69 @@ namespace Surpass.ORM.EFCore
 
         /// <inheritdoc />
         /// <summary>
+        /// Batch save entities in faster way<br />
+        /// 快速批量保存实体<br />
+        /// </summary>
+        public void FastBatchSave<T, TPrimaryKey>(IEnumerable<T> entities)
+            where T : class, IEntity<TPrimaryKey>
+        {
+            foreach (var entity in entities)
+            {
+                InsertOrUpdate(entity);
+            }
+            SaveChanges(); // send commands to database
+        }
+
+        #endregion
+
+        #region 异步插入或更新方法
+
+        /// <summary>
+        /// Insert or update entity<br/>
+        /// 插入或更新实体<br/>
+        /// </summary>
+        //protected void InsertOrUpdateAcync<T>(T entity, Action<T> update = null)
+        //    where T : class, IEntity
+        //{
+        //    var entityInfo = Entry(entity);
+        //    update?.Invoke(entity);
+        //    if (entityInfo.State == EntityState.Detached)
+        //    {
+        //        // It's not being tracked
+        //        if (entityInfo.IsKeySet)
+        //        {
+        //            // The key is not default, we're not sure it's in database or not
+        //            // check it first, it's rare so it shouldn't cause performance impact
+        //            var property = typeof(T).FastGetProperty(nameof(IEntity<object>.Id));
+        //            var id = property.FastGetValue(entity);
+        //            var expr = ExpressionUtils.MakeMemberEqualiventExpression<T>(property.Name, id);
+        //            if (Count(expr) > 0)
+        //            {
+        //                Update(entity);
+        //            }
+        //            else
+        //            {
+        //                Add(entity);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // The key is default, set it's state to Added
+        //            Add(entity);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // It's being tracked, we don't need to attach it
+        //    }
+        //}
+
+        #endregion
+
+        #region 同步删除方法
+
+        /// <inheritdoc />
+        /// <summary>
         /// Delete entity from database<br />
         /// 删除数据库中的实体<br />
         /// </summary>
@@ -340,21 +437,6 @@ namespace Surpass.ORM.EFCore
 
         /// <inheritdoc />
         /// <summary>
-        /// Batch save entities in faster way<br />
-        /// 快速批量保存实体<br />
-        /// </summary>
-        public void FastBatchSave<T, TPrimaryKey>(IEnumerable<T> entities)
-            where T : class, IEntity<TPrimaryKey>
-        {
-            foreach (var entity in entities)
-            {
-                InsertOrUpdate(entity);
-            }
-            SaveChanges(); // send commands to database
-        }
-
-        /// <inheritdoc />
-        /// <summary>
         /// Batch delete entities in faster way<br />
         /// 快速批量删除实体<br />
         /// </summary>
@@ -367,6 +449,13 @@ namespace Surpass.ORM.EFCore
             SaveChanges(); // send commands to database
             return count;
         }
+
+        #endregion
+
+        #region 异步删除方法
+        #endregion
+
+
 
         /// <inheritdoc />
         /// <summary>
@@ -388,7 +477,5 @@ namespace Surpass.ORM.EFCore
         {
             return Set<T>().FromSql((string)query, (object[])parameters);
         }
-
-        //public DbSet<User> User { get; set; }
     }
 }

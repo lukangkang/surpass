@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using ZKWeb.Database;
+using Surpass.Infrastructure.Database;
 
-namespace Surpass.Infrastructure.Database {
+namespace Surpass.Database {
 	/// <summary>
 	/// Interface used to define an entity-to-database mapping<br/>
 	/// 用于定义实体到数据库映射的接口<br/>

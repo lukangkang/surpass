@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Surpass.Database
 {
+    public class DatabaseOptions : List<DatabaseOption> { }
+
     /// <summary>
     /// 其他数据库
     /// </summary>

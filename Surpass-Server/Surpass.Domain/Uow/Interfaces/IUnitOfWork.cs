@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Surpass.Database;
 using Surpass.Domain.Filters.Interfaces;
-using Surpass.Infrastructure.Database;
 
 namespace Surpass.Domain.Uow.Interfaces {
 	/// <summary>

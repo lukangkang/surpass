@@ -12,6 +12,7 @@ using SurpassStandard.Dependency;
 
 namespace Surpass.Domain.Uow
 {
+    /// <inheritdoc />
     /// <summary>
     /// 工作单元
     /// 工作单元用于在一个区域中共享数据库上下文和事务
@@ -19,7 +20,7 @@ namespace Surpass.Domain.Uow
     /// - 工作单元过滤器用于处理拥有某一特征(例如有创建时间)的所有实体，可以在一定的范围内启用和禁用
     /// - 数据事件用于处理某一类型的实体，全局一直有效且不能禁用
     /// </summary>
-    [ExportMany, Singleton]
+    [ExportMany, SingletonLifeTime]
     public class UnitOfWork : IUnitOfWork
     {
         /// <summary>

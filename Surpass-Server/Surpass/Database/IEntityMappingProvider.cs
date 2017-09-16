@@ -1,4 +1,6 @@
-﻿namespace Surpass.Infrastructure.Database {
+﻿using Surpass.Infrastructure.Database;
+
+namespace Surpass.Database {
 	/// <summary>
 	/// Empty base interface<br/>
 	/// 空的基础接口<br/>

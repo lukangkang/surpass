@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Surpass.Domain.Entities;
-using Surpass.Infrastructure.Database;
 using Surpass.ORM.EFCore;
-using Surpass.Web.Models;
 
 namespace Surpass.Web.Controllers
 {

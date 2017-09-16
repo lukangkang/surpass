@@ -1,13 +1,13 @@
-﻿using ZKWeb.Database;
+﻿using Surpass.Infrastructure.Database;
 
-namespace Surpass.Infrastructure.Database {
+namespace Surpass.Database {
 	/// <summary>
 	/// Non-generic interface of entity<br/>
 	/// 实体的非泛型接口<br/>
 	/// </summary>
-	/// <seealso cref="IEntityMappingProvider"/>
 	/// <seealso cref="IEntity{TPrimaryKey}"/>
 	/// <seealso cref="IDatabaseContext"/>
+	/// <seealso cref="IEntityMappingProvider"/>
 	public interface IEntity { }
 
 	/// <summary>

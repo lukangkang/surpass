@@ -55,10 +55,10 @@ namespace Surpass.Storage {
 			var config = Application.Ioc.GetService<LocalPathConfig>();
 			config.WebsiteRootDirectory = Path.GetFullPath(websiteRootDirectory);
 			config.AppDataDirectory = Path.Combine(config.WebsiteRootDirectory, "App_Data");
-			//config.WebsiteConfigPath = Path.Combine(config.AppDataDirectory, "config.json");
-			//config.PluginInfoFilename = "plugin.json";
-			//config.TemplateDirectoryName = "templates";
-			//config.DeviceSpecializedTemplateDirectoryNameFormat = "templates.{0}";
-		}
+            //config.WebsiteConfigPath = Path.Combine(config.AppDataDirectory, "config.json");
+            config.PluginInfoFilename = "plugin.json";
+            //config.TemplateDirectoryName = "templates";
+            //config.DeviceSpecializedTemplateDirectoryNameFormat = "templates.{0}";
+        }
 	}
 }

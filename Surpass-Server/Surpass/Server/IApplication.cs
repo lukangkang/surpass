@@ -26,7 +26,7 @@ namespace Surpass.Infrastructure.Server
         /// The MicroDI Container Instance
         /// MicroDI容器的实例
         /// </summary>
-        IServiceCollection services { get; }
+        IServiceCollection Services { get; }
 
         /// <summary>
         /// In progress requests<br/>
@@ -38,8 +38,9 @@ namespace Surpass.Infrastructure.Server
         /// Intialize main application<br/>
         /// 初始化主应用<br/>
         /// </summary>
+        /// <param name="services"></param>
         /// <param name="websiteRootDirectory"></param>
-        void Initialize(string websiteRootDirectory);
+        void Initialize(IServiceCollection services,string websiteRootDirectory);
 
         /// <summary>
         /// Handle http request<br/>

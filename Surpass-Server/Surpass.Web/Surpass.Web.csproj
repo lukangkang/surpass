@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Properties\PublishProfiles\surpass - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\surpassframework - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\SurpassWeb - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\SurpassWeb20170915111151 - Web Deploy.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
   </ItemGroup>
@@ -16,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Models\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />

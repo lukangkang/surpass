@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace ZKWeb.Plugin.AssemblyLoaders {
+namespace Surpass.Plugin.AssemblyLoaders {
 	/// <summary>
 	/// Interface of assembly loader<br/>
 	/// 程序加载器的接口<br/>

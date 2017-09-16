@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Surpass.Database;
 using Surpass.Infrastructure.Server;
+using Surpass.Plugin;
+using Surpass.Plugin.AssemblyLoaders;
+using Surpass.Plugin.CompilerServices;
 using Surpass.Storage;
 
 namespace Surpass.Server
@@ -23,13 +26,13 @@ namespace Surpass.Server
         /// <summary>
         /// 
         /// </summary>
-        public virtual IServiceCollection services => new ServiceCollection();
+        public virtual IServiceCollection Services { get; protected set; }
 
         /// <summary>
         ///  The MicroDI Container Instance
         /// MicroDI容器的服务获取实例
         /// </summary>
-        public virtual IServiceProvider Ioc => services.BuildServiceProvider();
+        public virtual IServiceProvider Ioc => Services.BuildServiceProvider();
 
         /// <summary>
         /// 
@@ -54,10 +57,15 @@ namespace Surpass.Server
         /// </summary>
         protected virtual void InitializeContainer()
         {
-            services.AddSingleton<DatabaseManager>();
 
-            services.AddSingleton<LocalPathConfig>();
-            services.AddSingleton<LocalPathManager>();
+            Services.AddSingleton<DatabaseManager>();
+
+            Services.AddSingleton<IAssemblyLoader, CoreAssemblyLoader>();
+            Services.AddSingleton<RoslynCompilerService>();
+            Services.AddSingleton<PluginManager>();
+
+            Services.AddSingleton<LocalPathConfig>();
+            Services.AddSingleton<LocalPathManager>();
         }
 
         /// <summary>
@@ -65,14 +73,18 @@ namespace Surpass.Server
         /// </summary>
         protected virtual void InitializeCoreComponents()
         {
+            Ioc.GetService<LocalPathConfig>().Initialize(WebsiteRootDirectory);
+            Ioc.GetService<PluginManager>().Intialize();
             Ioc.GetService<DatabaseManager>().Initialize();
+
         }
 
         /// <inheritdoc />
         /// <summary>
         /// </summary>
+        /// <param name="services"></param>
         /// <param name="websiteRootDirectory"></param>
-        public void Initialize(string websiteRootDirectory)
+        public void Initialize(IServiceCollection services,string websiteRootDirectory)
         {
             if (Interlocked.Exchange(ref initialized, 1) != 0)
             {
@@ -80,6 +92,7 @@ namespace Surpass.Server
             }
             try
             {
+                Services = services;
                 WebsiteRootDirectory = websiteRootDirectory;
                 InitializeContainer();
                 InitializeCoreComponents();

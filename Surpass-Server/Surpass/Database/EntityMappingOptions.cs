@@ -1,4 +1,4 @@
-﻿namespace ZKWeb.Database {
+﻿namespace Surpass.Database {
 	/// <summary>
 	/// The mapping options of the entity field<br/>
 	/// 实体字段的映射选项<br/>

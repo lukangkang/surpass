@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace ZKWeb.Plugin.AssemblyLoaders {
+namespace Surpass.Plugin.AssemblyLoaders {
 	/// <summary>
 	/// Base class of assembly loader<br/>
 	/// 程序集加载器的基类<br/>

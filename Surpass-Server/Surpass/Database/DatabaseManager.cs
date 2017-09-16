@@ -5,7 +5,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Surpass.Infrastructure.Database;
-using ZKWeb.Plugin.AssemblyLoaders;
+using Surpass.Plugin.AssemblyLoaders;
 
 namespace Surpass.Database {
 	/// <summary>
@@ -32,11 +32,11 @@ namespace Surpass.Database {
 		/// Default database context factory<br/>
 		/// 默认的数据库上下文生成器<br/>
 		/// </summary>
-		protected virtual IDatabaseContextFactory DefaultContextFactory { get; set; }
+		protected IDatabaseContextFactory DefaultContextFactory { get; set; }
 
-	    private readonly IOptionsSnapshot<List<DatabaseOption>> _options;      //手动高亮
+	    private readonly IOptionsMonitor<DatabaseOptions> _options;      
 
-	    public DatabaseManager(IOptionsSnapshot<List<DatabaseOption>> options)  //手动高亮
+	    public DatabaseManager(IOptionsMonitor<DatabaseOptions> options) 
 	    {
 	        _options = options;
 	    }
@@ -102,7 +102,7 @@ namespace Surpass.Database {
         /// </summary>
         protected internal virtual void Initialize()
         {
-            var defaultDatabase = _options.Value.FirstOrDefault(x => x.Name == "Default");
+            var defaultDatabase = _options.CurrentValue.FirstOrDefault(x => x.Name == "Default");
             if (defaultDatabase == null)
                 throw new KeyNotFoundException("主数据库配置项缺失");
 
