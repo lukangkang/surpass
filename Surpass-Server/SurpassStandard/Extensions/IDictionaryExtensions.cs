@@ -95,5 +95,19 @@ namespace SurpassStandard.Extensions {
 			}
 			return result.ConvertOrDefault(defaultValue);
 		}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+	    public static T GetOrDefault<T>(
+	        this IDictionary<object, object> dict, object key, T defaultValue = default(T))
+	    {
+	        return GetOrDefault(dict, key.ToString(), defaultValue);
+	    }
 	}
 }

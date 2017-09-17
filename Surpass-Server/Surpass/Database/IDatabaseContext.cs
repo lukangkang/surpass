@@ -129,7 +129,7 @@ namespace Surpass.Database {
 		/// <typeparam name="T">Entity Type</typeparam>
 		/// <param name="predicate">The predicate</param>
 		/// <returns></returns>
-		long Count<T>(Expression<Func<T, bool>> predicate)
+		long Size<T>(Expression<Func<T, bool>> predicate)
 			where T : class, IEntity;
 
 		/// <summary>

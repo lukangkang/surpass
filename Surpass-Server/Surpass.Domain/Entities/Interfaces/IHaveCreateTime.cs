@@ -2,6 +2,7 @@
 using Surpass.Database;
 
 namespace Surpass.Domain.Entities.Interfaces {
+	/// <inheritdoc />
 	/// <summary>
 	/// 包含创建时间的接口
 	/// </summary>

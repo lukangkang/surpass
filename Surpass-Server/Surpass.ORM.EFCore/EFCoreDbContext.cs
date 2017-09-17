@@ -202,7 +202,7 @@ namespace Surpass.ORM.EFCore
         /// Get how many entities that matched the given predicate<br />
         /// 获取符合传入条件的实体数量<br />
         /// </summary>
-        public long Count<T>(Expression<Func<T, bool>> predicate)
+        public long Size<T>(Expression<Func<T, bool>> predicate)
             where T : class, IEntity
         {
             return Query<T>().LongCount(predicate);
@@ -226,7 +226,7 @@ namespace Surpass.ORM.EFCore
         /// Get how many entities that matched the given predicate<br />
         /// 获取符合传入条件的实体数量<br />
         /// </summary>
-        public async Task<long> CountAsync<T>(Expression<Func<T, bool>> predicate)
+        public async Task<long> SizeAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, IEntity
         {
             return await Query<T>().LongCountAsync(predicate);
@@ -256,7 +256,7 @@ namespace Surpass.ORM.EFCore
                     var property = typeof(T).FastGetProperty(nameof(IEntity<object>.Id));
                     var id = property.FastGetValue(entity);
                     var expr = ExpressionUtils.MakeMemberEqualiventExpression<T>(property.Name, id);
-                    if (Count(expr) > 0)
+                    if (Size(expr) > 0)
                     {
                         Update(entity);
                     }

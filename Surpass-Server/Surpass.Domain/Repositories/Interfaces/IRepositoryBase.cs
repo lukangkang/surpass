@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Surpass.Database;
 
-namespace Surpass.Domain.Interface
+namespace Surpass.Domain.Repositories.Interfaces
 {
     /// <summary>
     /// 仓储的接口
@@ -15,9 +15,11 @@ namespace Surpass.Domain.Interface
         where TEntity : class, IEntity<TPrimaryKey>
     {
         /// <summary>
-        /// 根据主键获取实体
+        /// 查询实体
+        /// 受这些过滤器的影响: 查询过滤器
         /// </summary>
-        TEntity Get(TPrimaryKey id);
+        /// <returns></returns>
+        IQueryable<TEntity> Query();
 
         /// <summary>
         /// 获取符合条件的单个实体
@@ -28,27 +30,12 @@ namespace Surpass.Domain.Interface
         TEntity Get(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
-        /// 根据条件获取实体列表
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        IList<TEntity> GetMany(Expression<Func<TEntity, bool>> predicate = null);
-
-        /// <summary>
-        /// 根据过滤函数获取实体列表
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="fetch"></param>
-        /// <returns></returns>
-        TResult GetFunc<TResult>(Func<IQueryable<TEntity>, TResult> fetch);
-
-        /// <summary>
         /// 计算符合条件的实体数量
         /// 受这些过滤器的影响: 查询过滤器
         /// </summary>
         /// <param name="predicate">条件</param>
         /// <returns></returns>
-        long Count(Expression<Func<TEntity, bool>> predicate);
+        long Size(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// 添加或更新实体
@@ -57,6 +44,13 @@ namespace Surpass.Domain.Interface
         /// <param name="entity">实体</param>
         /// <param name="update">更新函数</param>
         void Save(ref TEntity entity, Action<TEntity> update);
+
+        /// <summary>
+        /// 删除实体
+        /// 受这些过滤器的影响: 操作过滤器
+        /// </summary>
+        /// <param name="entity">实体</param>
+        void Delete(TEntity entity);
 
         /// <summary>
         /// 批量保存实体
@@ -78,20 +72,6 @@ namespace Surpass.Domain.Interface
             Expression<Func<TEntity, bool>> predicate, Action<TEntity> update);
 
         /// <summary>
-        /// 删除实体
-        /// 受这些过滤器的影响: 操作过滤器
-        /// </summary>
-        /// <param name="entity">实体</param>
-        void Delete(TEntity entity);
-
-        /// <summary>
-        /// 根据主键删除实体
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        bool Delete(TPrimaryKey id);
-
-        /// <summary>
         /// 批量删除实体
         /// 受这些过滤器的影响: 查询过滤器, 操作过滤器
         /// </summary>
@@ -100,12 +80,5 @@ namespace Surpass.Domain.Interface
         /// <returns></returns>
         long BatchDelete(
             Expression<Func<TEntity, bool>> predicate, Action<TEntity> beforeDelete = null);
-
-        /// <summary>
-        /// 批量永久删除
-        /// </summary>
-        /// <param name="ids"></param>
-        /// <returns></returns>
-        long BatchDeleteForever(IEnumerable<TPrimaryKey> ids);
     }
 }

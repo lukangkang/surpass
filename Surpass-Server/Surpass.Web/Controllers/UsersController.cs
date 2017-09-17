@@ -14,6 +14,7 @@ namespace Surpass.Web.Controllers
 
         public UsersController(EFCoreDbContext context)
         {
+
             _context = context;
         }
 

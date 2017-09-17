@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Surpass.Repository\Surpass.Repository.csproj" />
     <ProjectReference Include="..\Surpass\Surpass.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
   </ItemGroup>
 
 </Project>

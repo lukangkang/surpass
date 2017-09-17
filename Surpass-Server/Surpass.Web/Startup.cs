@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -72,6 +73,8 @@ namespace Surpass.Web
             services.AddOptions();
             services.Configure<DatabaseOptions>(Configuration.GetSection("Databases"));
             services.Configure<PluginOptions>(Configuration.GetSection("Plugins"));
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             Application.Initialize(services, GetWebsiteRootDirectory());
 

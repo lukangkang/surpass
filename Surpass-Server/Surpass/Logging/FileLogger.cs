@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace Surpass.Logging
 {
 
-    public partial class FileLogger : ILogger
+    public  class FileLogger : ILogger
     {
         private readonly Func<string, LogLevel, bool> _filter;
         private readonly string _name;
