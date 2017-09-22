@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Surpass.Plugin
+namespace SurpassStandard.Options
 {
     public class PluginOptions : List<string> { }
 }

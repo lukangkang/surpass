@@ -142,7 +142,7 @@ namespace Surpass.ORM.EFCore
             if (options.WithSerialization == true)
             {
                 // log error only, some functions may not work
-                var logManager = Application.Ioc.GetService<ILoggerFactory>().CreateLogger<EFCoreEntityMappingBuilder<T>>();
+                var logManager = Application.Provider.GetService<ILoggerFactory>().CreateLogger<EFCoreEntityMappingBuilder<T>>();
                 logManager.LogError(
                     "Entity framework core not support custom type mapping yet, " +
                     "see https://github.com/aspnet/EntityFramework/issues/242 " +
@@ -245,7 +245,7 @@ namespace Surpass.ORM.EFCore
             where TChild : class
         {
             // log error only, some functions may not work
-            var logManager = Application.Ioc.GetService<ILoggerFactory>().CreateLogger<EFCoreEntityMappingBuilder<T>>();
+            var logManager = Application.Provider.GetService<ILoggerFactory>().CreateLogger<EFCoreEntityMappingBuilder<T>>();
             logManager.LogError(
                 "Entity framework core not support many-to-many yet, " +
                 "see https://github.com/aspnet/EntityFramework/issues/1368 " +

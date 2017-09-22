@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Surpass.Database;
@@ -23,8 +24,8 @@ namespace Surpass.Server
         /// </summary>
         public virtual Version Version { get; }
 
+        /// <inheritdoc />
         /// <summary>
-        /// 
         /// </summary>
         public virtual IServiceCollection Services { get; protected set; }
 
@@ -32,7 +33,7 @@ namespace Surpass.Server
         ///  The MicroDI Container Instance
         /// MicroDI容器的服务获取实例
         /// </summary>
-        public virtual IServiceProvider Ioc => Services.BuildServiceProvider();
+        public virtual IServiceProvider Provider { get;  set; }
 
         /// <summary>
         /// 
@@ -66,6 +67,7 @@ namespace Surpass.Server
 
             Services.AddSingleton<LocalPathConfig>();
             Services.AddSingleton<LocalPathManager>();
+            
         }
 
         /// <summary>
@@ -73,9 +75,9 @@ namespace Surpass.Server
         /// </summary>
         protected virtual void InitializeCoreComponents()
         {
-            Ioc.GetService<LocalPathConfig>().Initialize(WebsiteRootDirectory);
-            Ioc.GetService<PluginManager>().Intialize();
-            Ioc.GetService<DatabaseManager>().Initialize();
+            Provider.GetService<LocalPathConfig>().Initialize(WebsiteRootDirectory);
+            Provider.GetService<PluginManager>().Intialize();
+            Provider.GetService<DatabaseManager>().Initialize();
 
         }
 
@@ -84,7 +86,7 @@ namespace Surpass.Server
         /// </summary>
         /// <param name="services"></param>
         /// <param name="websiteRootDirectory"></param>
-        public void Initialize(IServiceCollection services,string websiteRootDirectory)
+        public void AddSurpass(IServiceCollection services)
         {
             if (Interlocked.Exchange(ref initialized, 1) != 0)
             {
@@ -93,15 +95,24 @@ namespace Surpass.Server
             try
             {
                 Services = services;
-                WebsiteRootDirectory = websiteRootDirectory;
                 InitializeContainer();
-                InitializeCoreComponents();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        /// <param name="app"></param>
+        public void UseSurpass(IApplicationBuilder app,string websiteRootDirectory)
+        {
+            Provider = app.ApplicationServices;
+            WebsiteRootDirectory = websiteRootDirectory;
+            InitializeCoreComponents();
         }
 
         public void OnRequest(IHttpContextAccessor context)

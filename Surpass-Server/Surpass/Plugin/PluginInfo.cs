@@ -68,7 +68,7 @@ namespace Surpass.Plugin
         {
             // Read plugin information from json
             // Create a default information instance if json file not exist
-            var pathConfig = Application.Ioc.GetService<LocalPathConfig>();
+            var pathConfig = Application.Provider.GetService<LocalPathConfig>();
             var jsonPath = Path.Combine(dir, pathConfig.PluginInfoFilename);
             var json = File.Exists(jsonPath) ? File.ReadAllText(jsonPath) : "{}";
             var info = JsonConvert.DeserializeObject<PluginInfo>(json);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Surpass.Infrastructure.Database;
 
 namespace Surpass.Database {
@@ -14,7 +15,7 @@ namespace Surpass.Database {
 	/// Example for insert enity<br/>
 	/// 添加实体的示例<br/>
 	/// <code lannguage="cs">
-	/// var databaseManager = Application.Ioc.Resolve&lt;DatabaseManager&gt;();
+	/// var databaseManager = Application.Provider.Resolve&lt;DatabaseManager&gt;();
 	/// using (var context = databaseManager.CreateContext()) {
 	///		var data = new ExampleTable() {
 	///			Name = "test",
@@ -28,7 +29,7 @@ namespace Surpass.Database {
 	/// Example for update entity<br/>
 	/// 修改实体的示例<br/>
 	/// <code language="cs">
-	/// var databaseManager = Application.Ioc.Resolve&lt;DatabaseManager&gt;();
+	/// var databaseManager = Application.Provider.Resolve&lt;DatabaseManager&gt;();
 	/// using (var context = databaseManager.CreateContext()) {
 	///		var data = context.Get&lt;ExampleTable&gt;(t => t.name == "test");
 	///		context.Save(ref data, d => d.Name = "updated");
@@ -38,7 +39,7 @@ namespace Surpass.Database {
 	/// Example for query entities<br/>
 	/// 查询实体的示例<br/>
 	/// <code language="cs">
-	/// var databaseManager = Application.Ioc.Resolve&lt;DatabaseManager&gt;();
+	/// var databaseManager = Application.Provider.Resolve&lt;DatabaseManager&gt;();
 	/// using (var context = databaseManager.CreateContext()) {
 	///		var notUpdated = context.Query&lt;ExampleTable&gt;().Where(t => t.Name != "updated").ToList();
 	/// }
@@ -47,7 +48,7 @@ namespace Surpass.Database {
 	/// Example for delete entities<br/>
 	/// 删除数据的示例<br/>
 	/// <code language="cs">
-	/// var databaseManager = Application.Ioc.Resolve&lt;DatabaseManager&gt;();
+	/// var databaseManager = Application.Provider.Resolve&lt;DatabaseManager&gt;();
 	/// using (var context = databaseManager.CreateContext()) {
 	///		long deleted = context.BatchDelete&lt;ExampleTable&gt;(d => d.Name == "updated");
 	/// }
@@ -122,14 +123,26 @@ namespace Surpass.Database {
 		T Get<T>(Expression<Func<T, bool>> predicate)
 			where T : class, IEntity;
 
-		/// <summary>
-		/// Get how many entities that matched the given predicate<br/>
-		/// 获取符合传入条件的实体数量<br/>
-		/// </summary>
-		/// <typeparam name="T">Entity Type</typeparam>
-		/// <param name="predicate">The predicate</param>
-		/// <returns></returns>
-		long Size<T>(Expression<Func<T, bool>> predicate)
+	    /// <summary>
+	    /// Get single entity that matched the given predicate<br/>
+	    /// It should return null if no matched entity found<br/>
+	    /// 获取符合传入条件的单个实体<br/>
+	    /// 如果无符合条件的实体应该返回null<br/>
+	    /// 异步实现
+	    /// </summary>
+	    /// <typeparam name="T">Entity Type</typeparam>
+	    /// <param name="predicate">The predicate</param>
+	    /// <returns></returns>
+        Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : class, IEntity;
+
+        /// <summary>
+        /// Get how many entities that matched the given predicate<br/>
+        /// 获取符合传入条件的实体数量<br/>
+        /// </summary>
+        /// <typeparam name="T">Entity Type</typeparam>
+        /// <param name="predicate">The predicate</param>
+        /// <returns></returns>
+        long Size<T>(Expression<Func<T, bool>> predicate)
 			where T : class, IEntity;
 
 		/// <summary>

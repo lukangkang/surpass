@@ -31,7 +31,7 @@ namespace Surpass.ORM.EFCore
         /// Namespace for model snapshot<br/>
         /// 模型快照的命名空间<br/>
         /// </summary>
-        protected const string ModelSnapshotNamespace = "ZKWeb.ORM.EFCore.Migrations";
+        protected const string ModelSnapshotNamespace = "Surpass.ORM.EFCore.Migrations";
         /// <summary>
         /// Class name prefix for model snapshot<br/>
         /// 模型快照的类名前缀<br/>
@@ -69,8 +69,8 @@ namespace Surpass.ORM.EFCore
         /// </summary>
         public EFCoreDatabaseContextFactory(string database, string connectionString) :
             this(database, connectionString,
-                Application.Ioc.GetServices<IDatabaseInitializeHandler>(),
-                Application.Ioc.GetServices<IEntityMappingProvider>())
+                Application.Provider.GetServices<IDatabaseInitializeHandler>(),
+                Application.Provider.GetServices<IEntityMappingProvider>())
         { }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Surpass.ORM.EFCore
                 new EFCoreDbContext(Database, ConnectionString, Handlers, Providers));
             // Check if database auto migration is disabled
             //判断是否要禁用数据库自动迁移
-            //var configManager = Application.Ioc.GetServices<WebsiteConfigManager>();
+            //var configManager = Application.Provider.GetServices<WebsiteConfigManager>();
             //var noAutoMigration = configManager.WebsiteConfig.Extra.GetOrDefault<bool?>(
             //    EFCoreExtraConfigKeys.DisableEFCoreDatabaseAutoMigration) ?? false;
             //if (!noAutoMigration)
@@ -158,8 +158,8 @@ namespace Surpass.ORM.EFCore
                 var assemblyName = ModelSnapshotFilePrefix + DateTime.UtcNow.Ticks;
                 var codePath = Path.Combine(tempPath, assemblyName + ".cs");
                 var assemblyPath = Path.Combine(tempPath, assemblyName + ".dll");
-                var compileService = Application.Ioc.GetService<ICompilerService>();
-                var assemblyLoader = Application.Ioc.GetService<IAssemblyLoader>();
+                var compileService = Application.Provider.GetService<ICompilerService>();
+                var assemblyLoader = Application.Provider.GetService<IAssemblyLoader>();
                 File.WriteAllText(codePath, lastMigration.Model);
                 compileService.Compile(new[] { codePath }, assemblyName, assemblyPath);
                 // Load assembly and create the snapshot instance

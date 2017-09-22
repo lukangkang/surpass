@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Surpass.Infrastructure.Server;
 using Surpass.Server;
@@ -50,26 +51,46 @@ namespace Surpass
         ///  The MicroDI Container Instance
         /// MicroDI容器的服务获取实例
         /// </summary>
-        public static IServiceProvider Ioc => Services.BuildServiceProvider();
+        public static IServiceProvider Provider => Instance.Provider;
 
         /// <summary>
         /// Intialize application with DefaultApplication<br/>
         /// 初始化默认应用<br/>
         /// </summary>
-        public static void Initialize(IServiceCollection services, string websiteRootDirectory)
+        public static void AddSurpass(IServiceCollection services)
         {
-            Initialize<DefaultApplication>(services, websiteRootDirectory);
+            AddSurpass<DefaultApplication>(services);
         }
 
         /// <summary>
         /// Intialize application with specificed application type<br/>
         /// 初始化指定应用<br/>
         /// </summary>
-        public static void Initialize<TApplication>(IServiceCollection services, string websiteRootDirectory)
+        public static void AddSurpass<TApplication>(IServiceCollection services)
             where TApplication : IApplication, new()
         {
             Instance = new TApplication();
-            Instance.Initialize(services,websiteRootDirectory);
+            Instance.AddSurpass(services);
+        }
+
+        /// <summary>
+        /// Intialize application with DefaultApplication<br/>
+        /// 初始化默认应用<br/>
+        /// </summary>
+        public static void UseSurpass(IApplicationBuilder app, string websiteRootDirectory)
+        {
+            AddSurpass<DefaultApplication>(app, websiteRootDirectory);
+        }
+
+        /// <summary>
+        /// Intialize application with specificed application type<br/>
+        /// 初始化指定应用<br/>
+        /// </summary>
+        public static void AddSurpass<TApplication>(IApplicationBuilder app, string websiteRootDirectory)
+            where TApplication : IApplication, new()
+        {
+            Instance = new TApplication();
+            Instance.UseSurpass(app, websiteRootDirectory);
         }
     }
 }

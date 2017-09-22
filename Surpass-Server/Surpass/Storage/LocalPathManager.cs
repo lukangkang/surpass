@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Surpass.Plugin;
+using SurpassStandard.Options;
 using SurpassStandard.Utils;
 
 namespace Surpass.Storage
@@ -48,30 +47,27 @@ namespace Surpass.Storage
         /// </summary>
         //protected IKeyValueCache<string, string> ResourcePathCache { get; set; }
 
-        private readonly LocalPathConfig _pathConfig;
-
-        private readonly IOptionsSnapshot<PluginOptions> _pluginOptions;
+        private readonly IOptionsMonitor<PluginOptions> _pluginOptions;
 
         /// <summary>
         /// Initialize<br/>
         /// 初始化<br/>
         /// </summary>
-        public LocalPathManager(LocalPathConfig pathConfig, IOptionsSnapshot<PluginOptions> pluginOptions)
+        public LocalPathManager(IOptionsMonitor<PluginOptions> pluginOptions)
         {
-            _pathConfig = pathConfig;
             _pluginOptions = pluginOptions;
             
-            //var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+            //var configManager = Application.Provider.Resolve<WebsiteConfigManager>();
             //TemplatePathCacheTime = TimeSpan.FromSeconds(
             //    configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.TemplatePathCacheTime, 2));
             //ResourcePathCacheTime = TimeSpan.FromSeconds(
             //    configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ResourcePathCacheTime, 2));
             // Path may different between servers, shouldn't use ICacheFactory here
             //TemplatePathCache = new IsolatedKeyValueCache<string, string>(
-            //    new[] { Application.Ioc.Resolve<ICacheIsolationPolicy>(serviceKey: "Device") },
+            //    new[] { Application.Provider.Resolve<ICacheIsolationPolicy>(serviceKey: "Device") },
             //    new MemoryCache<IsolatedCacheKey<string>, string>());
             //ResourcePathCache = new IsolatedKeyValueCache<string, string>(
-            //    new[] { Application.Ioc.Resolve<ICacheIsolationPolicy>(serviceKey: "Device") },
+            //    new[] { Application.Provider.Resolve<ICacheIsolationPolicy>(serviceKey: "Device") },
             //    new MemoryCache<IsolatedCacheKey<string>, string>());
         }
 
@@ -82,10 +78,13 @@ namespace Surpass.Storage
         /// 这些路径会用于查找插件<br/>
         /// </summary>
         /// <returns></returns>
-        public virtual IList<string> GetPluginDirectories()
+        public IList<string> GetPluginDirectories()
         {
-            return _pluginOptions.Value.Select(p =>
-                Path.GetFullPath(Path.Combine(_pathConfig.WebsiteRootDirectory, p))).ToList();
+            //return _pluginOptions.Value.Select(p =>
+            //    Path.GetFullPath(Path.Combine(_pathConfig.WebsiteRootDirectory, p))).ToList();
+            // todo 暂时回一个固定的插件文件夹路径
+            var pathConfig = Application.Provider.GetService<LocalPathConfig>();
+            return new List<string> { Path.GetFullPath(Path.Combine(pathConfig.WebsiteRootDirectory, "../../Surpass-Server")) };
         }
 
         /// <summary>
@@ -116,7 +115,7 @@ namespace Surpass.Storage
         //public virtual IEnumerable<string> GetTemplateFullPathCandidates(string path)
         //{
         //    // Get client device and specialized template directory name
-        //    var pathConfig = Application.Ioc.Resolve<LocalPathConfig>();
+        //    var pathConfig = Application.Provider.Resolve<LocalPathConfig>();
         //    var device = HttpManager.CurrentContext.GetClientDevice();
         //    var deviceSpecializedTemplateDirectoryName = string.Format(
         //        pathConfig.DeviceSpecializedTemplateDirectoryNameFormat, device.ToString().ToLower());
@@ -146,7 +145,7 @@ namespace Surpass.Storage
         //        // Load from device specialized template directories first
         //        yield return PathUtils.SecureCombine(
         //            pathConfig.AppDataDirectory, deviceSpecializedTemplateDirectoryName, path);
-        //        var pluginManager = Application.Ioc.Resolve<PluginManager>();
+        //        var pluginManager = Application.Provider.Resolve<PluginManager>();
         //        foreach (var plugin in pluginManager.Plugins.Reverse<PluginInfo>())
         //        {
         //            yield return PathUtils.SecureCombine(
@@ -201,10 +200,10 @@ namespace Surpass.Storage
         //{
         //    // Load from App_Data first
         //    var path = PathUtils.SecureCombine(pathParts);
-        //    var pathConfig = Application.Ioc.Resolve<LocalPathConfig>();
+        //    var pathConfig = Application.Provider.Resolve<LocalPathConfig>();
         //    yield return PathUtils.SecureCombine(pathConfig.AppDataDirectory, path);
         //    // Then load from plugin directories
-        //    var pluginManager = Application.Ioc.Resolve<PluginManager>();
+        //    var pluginManager = Application.Provider.Resolve<PluginManager>();
         //    foreach (var plugin in pluginManager.Plugins.Reverse<PluginInfo>())
         //    {
         //        yield return PathUtils.SecureCombine(plugin.Directory, path);
@@ -247,7 +246,7 @@ namespace Surpass.Storage
         public virtual string GetStorageFullPath(params string[] pathParts)
         {
             var path = PathUtils.SecureCombine(pathParts);
-            var pathConfig = Application.Ioc.GetService<LocalPathConfig>();
+            var pathConfig = Application.Provider.GetService<LocalPathConfig>();
             var fullPath = PathUtils.SecureCombine(pathConfig.AppDataDirectory, path);
             return fullPath;
         }

@@ -288,7 +288,7 @@ namespace Surpass.ORM.EFCore
         public void Save<T>(ref T entity, Action<T> update = null)
             where T : class, IEntity
         {
-            var callbacks = Application.Ioc.GetServices<IEntityOperationHandler<T>>().ToList();
+            var callbacks = Application.Provider.GetServices<IEntityOperationHandler<T>>().ToList();
             var entityLocal = entity; // can't use ref parameter in lambda
             callbacks.ForEach(c => c.BeforeSave(this, entityLocal)); // notify before save
             InsertOrUpdate(entityLocal, update);
@@ -306,7 +306,7 @@ namespace Surpass.ORM.EFCore
             where T : class, IEntity
         {
             var entitiesLocal = entities.ToList();
-            var callbacks = Application.Ioc.GetServices<IEntityOperationHandler<T>>().ToList();
+            var callbacks = Application.Provider.GetServices<IEntityOperationHandler<T>>().ToList();
             foreach (var entity in entitiesLocal)
             {
                 callbacks.ForEach(c => c.BeforeSave(this, entity)); // notify before save
@@ -404,7 +404,7 @@ namespace Surpass.ORM.EFCore
         public void Delete<T>(T entity)
             where T : class, IEntity
         {
-            var callbacks = Application.Ioc.GetServices<IEntityOperationHandler<T>>().ToList();
+            var callbacks = Application.Provider.GetServices<IEntityOperationHandler<T>>().ToList();
             callbacks.ForEach(c => c.BeforeDelete(this, entity)); // notify before delete
             Remove(entity);
             SaveChanges(); // send commands to database
@@ -420,7 +420,7 @@ namespace Surpass.ORM.EFCore
             where T : class, IEntity
         {
             var entities = Query<T>().Where(predicate).ToList();
-            var callbacks = Application.Ioc.GetServices<IEntityOperationHandler<T>>().ToList();
+            var callbacks = Application.Provider.GetServices<IEntityOperationHandler<T>>().ToList();
             foreach (var entity in entities)
             {
                 beforeDelete?.Invoke(entity);

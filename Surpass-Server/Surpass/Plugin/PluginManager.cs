@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Surpass.Plugin.AssemblyLoaders;
 using Surpass.Storage;
+using SurpassStandard.Options;
 using SurpassStandard.Utils;
 
 namespace Surpass.Plugin
@@ -26,7 +27,7 @@ namespace Surpass.Plugin
         /// </summary>
         public IList<Assembly> PluginAssemblies { get; }
 
-        private readonly IOptionsSnapshot<PluginOptions> _pluginOptions;
+        private readonly IOptionsMonitor<PluginOptions> _pluginOptions;
 
         private readonly LocalPathManager _localPathManager;
 
@@ -34,10 +35,10 @@ namespace Surpass.Plugin
         /// Initialize<br/>
         /// 初始化<br/>
         /// </summary>
-        public PluginManager(IOptionsSnapshot<PluginOptions> pluginOptions, LocalPathManager localPathManager)
+        public PluginManager(IOptionsMonitor<PluginOptions> pluginOptions)
         {
             _pluginOptions = pluginOptions;
-            _localPathManager = localPathManager;
+            _localPathManager = Application.Provider.GetService<LocalPathManager>();
             Plugins = new List<PluginInfo>();
             PluginAssemblies = new List<Assembly>();
         }
@@ -52,7 +53,7 @@ namespace Surpass.Plugin
 
             //从网站配置文件获取插件名
             var pluginDirectories = _localPathManager.GetPluginDirectories();
-            foreach (var pluginName in _pluginOptions.Value)
+            foreach (var pluginName in _pluginOptions.CurrentValue)
             {
                 var dir = pluginDirectories
                     .Select(p => PathUtils.SecureCombine(p, pluginName))
@@ -66,7 +67,7 @@ namespace Surpass.Plugin
             }
 
             //加载插件
-            var assemblyLoader = Application.Ioc.GetService<IAssemblyLoader>();
+            var assemblyLoader = Application.Provider.GetService<IAssemblyLoader>();
             foreach (var plugin in Plugins)
             {
                 // todo 编译插件，目前不是插件不自动编译

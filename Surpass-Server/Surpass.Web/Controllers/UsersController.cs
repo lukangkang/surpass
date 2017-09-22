@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Surpass.Domain.Entities;
+using Surpass.Domain.Repositories.Interfaces;
 using Surpass.ORM.EFCore;
 
 namespace Surpass.Web.Controllers
@@ -12,16 +13,18 @@ namespace Surpass.Web.Controllers
     {
         private readonly EFCoreDbContext _context;
 
-        public UsersController(EFCoreDbContext context)
-        {
+        private readonly IRepositoryBase<User, Guid> _userRepository;
 
+        public UsersController(EFCoreDbContext context, IRepositoryBase<User, Guid> userRepository)
+        {
             _context = context;
+            _userRepository = userRepository;
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.FindAsync<List<User>>());
+            return View(await _userRepository.Query().ToListAsync());
         }
 
         // GET: Users/Details/5

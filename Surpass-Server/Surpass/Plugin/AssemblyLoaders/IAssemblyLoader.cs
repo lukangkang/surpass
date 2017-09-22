@@ -8,7 +8,7 @@ namespace Surpass.Plugin.AssemblyLoaders {
 	/// </summary>
 	/// <example>
 	/// <code language="cs">
-	/// var assemblyLoader = Application.Ioc.Resolve&lt;IAssemblyLoader&gt;();
+	/// var assemblyLoader = Application.Provider.Resolve&lt;IAssemblyLoader&gt;();
 	/// var assembly = assemblyLoader.Load("System.DrawingCore");
 	/// </code>
 	/// </example>

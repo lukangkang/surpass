@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Surpass.Database
+namespace SurpassStandard.Options
 {
     public class DatabaseOptions : List<DatabaseOption> { }
 

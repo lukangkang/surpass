@@ -10,8 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Surpass.Database;
-using Surpass.Plugin;
+using SurpassStandard.Options;
 
 namespace Surpass.Web
 {
@@ -44,7 +43,7 @@ namespace Surpass.Web
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddLocalization();
             services.AddLogging(builder =>
@@ -70,15 +69,14 @@ namespace Surpass.Web
             services.AddMvc();
             services.AddLogging();
 
-            services.AddOptions();
-            services.Configure<DatabaseOptions>(Configuration.GetSection("Databases"));
-            services.Configure<PluginOptions>(Configuration.GetSection("Plugins"));
+            services.AddOptions().Configure<BaseInfoOptions>(Configuration.GetSection("BaseInfo"))
+                .Configure<DatabaseOptions>(Configuration.GetSection("Databases"))
+                .Configure<PluginOptions>(Configuration.GetSection("Plugins"));
+            
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            Application.Initialize(services, GetWebsiteRootDirectory());
-
-            return services.BuildServiceProvider();
+            Application.AddSurpass(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,12 +95,25 @@ namespace Surpass.Web
             app.UseStaticFiles();
             app.UseAuthentication();
 
+            //允许跨域访问
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                //生开发环境
+                builder.AllowAnyOrigin();
+                //生产环境
+                //builder.WithOrigins("http://localhost:80");
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            Application.UseSurpass(app, GetWebsiteRootDirectory());
         }
     }
 }

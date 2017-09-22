@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Surpass.Infrastructure.Database;
 using Surpass.Plugin.AssemblyLoaders;
+using SurpassStandard.Options;
 
 namespace Surpass.Database {
 	/// <summary>
@@ -14,7 +15,7 @@ namespace Surpass.Database {
 	/// </summary>
 	/// <example>
 	/// <code>
-	/// var databaseManager = Application.Ioc.Resolve&lt;DatabaseManager&gt;();
+	/// var databaseManager = Application.Provider.Resolve&lt;DatabaseManager&gt;();
 	///	using (var context = databaseManager.CreateContext()) {
 	///		var data = new ExampleTable() {
 	///			Name = "test",
@@ -69,7 +70,7 @@ namespace Surpass.Database {
 	            throw new NotSupportedException("No ORM name is provided, please set it first");
 	        }
 	        var assemblyName = string.Format("Surpass.ORM.{0}", orm);
-	        var assemblyLoader = Application.Ioc.GetService<IAssemblyLoader>();
+	        var assemblyLoader = Application.Provider.GetService<IAssemblyLoader>();
 	        Assembly assembly;
 	        try
 	        {
@@ -117,9 +118,9 @@ namespace Surpass.Database {
         //public virtual IDisposable UseTemporaryDatabase(string key, IEnumerable<IDatabaseInitializeHandler> handlers = null,
         //    IEnumerable<IEntityMappingProvider> providers = null)
         //{
-        //    var log = Application.Ioc.Resolve<LogManager>();
+        //    var log = Application.Provider.Resolve<LogManager>();
         //    // Create database context factory, default use nhibernate orm
-        //    var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+        //    var configManager = Application.Provider.Resolve<WebsiteConfigManager>();
         //    var databases = configManager.WebsiteConfig.ExtensionDatabases;
         //    var orm = databases.FirstOrDefault(x => x.Key.Equals(key)).ORM ?? "NHibernate";
         //    //datatbases.GetOrDefault<string>(ExtraConfigKeys.TemporaryDatabaseORM) ?? "NHibernate";
@@ -132,8 +133,8 @@ namespace Surpass.Database {
         //    var overrideIoc = Application.OverrideIoc();
         //    var databaseManagerMock = Substitute.For<DatabaseManager>();
         //    databaseManagerMock.CreateContext().Returns(callInfo => contextFactory.CreateContext());
-        //    Application.Ioc.Unregister<DatabaseManager>();
-        //    Application.Ioc.RegisterInstance(databaseManagerMock);
+        //    Application.Provider.Unregister<DatabaseManager>();
+        //    Application.Provider.RegisterInstance(databaseManagerMock);
         //    // Finish override when disposed
         //    return overrideIoc;
         //}

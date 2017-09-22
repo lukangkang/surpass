@@ -49,7 +49,7 @@ namespace Surpass.Plugin.CompilerServices {
 		/// <param name="syntaxTrees">Syntax trees</param>
 		protected void LoadAssembliesFromUsings(IList<SyntaxTree> syntaxTrees) {
 			// Find all using directive
-			var assemblyLoader = Application.Ioc.GetService<IAssemblyLoader>();
+			var assemblyLoader = Application.Provider.GetService<IAssemblyLoader>();
 			foreach (var tree in syntaxTrees) {
 				foreach (var usingSyntax in ((CompilationUnitSyntax)tree.GetRoot()).Usings) {
 					var name = usingSyntax.Name;
@@ -114,7 +114,7 @@ namespace Surpass.Plugin.CompilerServices {
 			// It's for resolve assembly dependencies of plugin
 			LoadAssembliesFromUsings(syntaxTrees);
 			// Add loaded assemblies to compile references
-			var assemblyLoader = Application.Ioc.GetService<IAssemblyLoader>();
+			var assemblyLoader = Application.Provider.GetService<IAssemblyLoader>();
 			var references = assemblyLoader.GetLoadedAssemblies()
 				.Select(assembly => assembly.Location)
 				.Select(path => MetadataReference.CreateFromFile(path))

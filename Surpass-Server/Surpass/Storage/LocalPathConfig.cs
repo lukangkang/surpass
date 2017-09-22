@@ -14,45 +14,45 @@ namespace Surpass.Storage {
 		/// Website root directory<br/>
 		/// 网站根目录的路径<br/>
 		/// </summary>
-		public virtual string WebsiteRootDirectory { get; protected set; }
+		public string WebsiteRootDirectory { get; protected set; }
 		/// <summary>
 		/// App_Data directory<br/>
 		/// App_Data目录的路径<br/>
 		/// </summary>
-		public virtual string AppDataDirectory { get; protected set; }
+		public string AppDataDirectory { get; protected set; }
 		/// <summary>
 		/// Website configuration path<br/>
 		/// 网站配置的路径<br/>
 		/// </summary>
-		public virtual string WebsiteConfigPath { get; protected set; }
+		public string WebsiteConfigPath { get; protected set; }
 		/// <summary>
 		/// Filename that store plugin information<br/>
 		/// Under plugin directory<br/>
 		/// 储存插件信息的文件名<br/>
 		/// 在插件目录下<br/>
 		/// </summary>
-		public virtual string PluginInfoFilename { get; protected set; }
+		public string PluginInfoFilename { get; protected set; }
 		/// <summary>
 		/// Template directory name, only the name<br/>
 		/// Under App_Data or plugin directories<br/>
 		/// 模板文件夹的文件名, 仅名称<br/>
 		/// 在App_Data目录或插件目录下<br/>
 		/// </summary>
-		public virtual string TemplateDirectoryName { get; protected set; }
+		public string TemplateDirectoryName { get; protected set; }
 		/// <summary>
 		/// Device specialized template directory name format (with string.Format)<br/>
 		/// Under App_Data or plugin directories<br/>
 		/// 设备专用的模板文件名的格式字符串(使用string.Format)<br/>
 		/// 在App_Data目录或插件目录下<br/>
 		/// </summary>
-		public virtual string DeviceSpecializedTemplateDirectoryNameFormat { get; protected set; }
+		public string DeviceSpecializedTemplateDirectoryNameFormat { get; protected set; }
 
 		/// <summary>
 		/// Initialize<br/>
 		/// 初始化<br/>
 		/// </summary>
-		internal protected virtual void Initialize(string websiteRootDirectory) {
-			var config = Application.Ioc.GetService<LocalPathConfig>();
+		protected internal void Initialize(string websiteRootDirectory) {
+			var config = Application.Provider.GetService<LocalPathConfig>();
 			config.WebsiteRootDirectory = Path.GetFullPath(websiteRootDirectory);
 			config.AppDataDirectory = Path.Combine(config.WebsiteRootDirectory, "App_Data");
             //config.WebsiteConfigPath = Path.Combine(config.AppDataDirectory, "config.json");

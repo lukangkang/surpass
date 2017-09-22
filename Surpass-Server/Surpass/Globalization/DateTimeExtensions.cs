@@ -33,7 +33,7 @@ namespace Surpass.Globalization {
 
             // Get timezone from client
             // If timezone exist, use it to convert time
-            var timezone = Application.Ioc.GetService<IHttpContextAccessor>().HttpContext.Items
+            var timezone = Application.Provider.GetService<IHttpContextAccessor>().HttpContext.Items
                 .GetOrDefault<TimeZoneInfo>(LocaleUtils.TimeZoneKey);
 			if (timezone != null) {
 				time = DateTime.SpecifyKind(time, DateTimeKind.Utc);
@@ -86,7 +86,7 @@ namespace Surpass.Globalization {
 		public static DateTime FromClientTime(this DateTime time) {
             // Get timezone from client
             // If timezone exist, use it to convert time
-		    var timezone = Application.Ioc.GetService<IHttpContextAccessor>().HttpContext.Items
+		    var timezone = Application.Provider.GetService<IHttpContextAccessor>().HttpContext.Items
 		        .GetOrDefault<TimeZoneInfo>(LocaleUtils.TimeZoneKey);
             if (timezone != null) {
 				time = DateTime.SpecifyKind(time, DateTimeKind.Unspecified);

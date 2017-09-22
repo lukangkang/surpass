@@ -20,9 +20,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 获取工作单元
 		/// </summary>
-		protected virtual IUnitOfWork UnitOfWork {
-			get { return Application.Ioc.GetService<IUnitOfWork>(); }
-		}
+		protected  IUnitOfWork UnitOfWork => Application.Provider.GetService<IUnitOfWork>();
 	}
 
 	/// <summary>
@@ -38,14 +36,12 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 获取仓储
 		/// </summary>
-		protected virtual IRepositoryBase<TEntity, TPrimaryKey> Repository {
-			get { return Application.Ioc.GetService<IRepositoryBase<TEntity, TPrimaryKey>>(); }
-		}
+		protected IRepositoryBase<TEntity, TPrimaryKey> Repository => Application.Provider.GetService<IRepositoryBase<TEntity, TPrimaryKey>>();
 
-		/// <summary>
+	    /// <summary>
 		/// 根据主键获取实体
 		/// </summary>
-		public virtual TEntity Get(TPrimaryKey id) {
+		public TEntity Get(TPrimaryKey id) {
 			if (id.Equals(default(TPrimaryKey))) {
 				return default(TEntity);
 			}
@@ -58,7 +54,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 根据条件获取实体
 		/// </summary>
-		public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate) {
+		public TEntity Get(Expression<Func<TEntity, bool>> predicate) {
 			using (UnitOfWork.Scope()) {
 				return Repository.Get(predicate);
 			}
@@ -67,7 +63,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 根据条件获取实体列表
 		/// </summary>
-		public virtual IList<TEntity> GetMany(
+		public IList<TEntity> GetMany(
 			Expression<Func<TEntity, bool>> predicate = null) {
 			using (UnitOfWork.Scope()) {
 				var query = Repository.Query();
@@ -81,7 +77,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 根据过滤函数获取实体列表
 		/// </summary>
-		public virtual TResult GetMany<TResult>(
+		public TResult GetMany<TResult>(
 			Func<IQueryable<TEntity>, TResult> fetch) {
 			using (UnitOfWork.Scope()) {
 				return fetch(Repository.Query());
@@ -100,7 +96,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 保存实体
 		/// </summary>
-		public virtual void Save(ref TEntity entity, Action<TEntity> update = null) {
+		public void Save(ref TEntity entity, Action<TEntity> update = null) {
 			using (UnitOfWork.Scope()) {
 				Repository.Save(ref entity, update);
 			}
@@ -109,7 +105,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 根据主键删除实体
 		/// </summary>
-		public virtual bool Delete(TPrimaryKey id) {
+		public bool Delete(TPrimaryKey id) {
 			var expr = ExpressionUtils.MakeMemberEqualiventExpression<TEntity>("Id", id);
 			using (UnitOfWork.Scope()) {
 				return Repository.BatchDelete(expr) > 0;
@@ -119,7 +115,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 删除实体
 		/// </summary>
-		public virtual void Delete(TEntity entity) {
+		public void Delete(TEntity entity) {
 			using (UnitOfWork.Scope()) {
 				Repository.Delete(entity);
 			}
@@ -129,7 +125,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// 批量标记已删除或未删除
 		/// 返回标记的数量，不会实际删除
 		/// </summary>
-		public virtual long BatchSetDeleted(IEnumerable<TPrimaryKey> ids, bool deleted) {
+		public long BatchSetDeleted(IEnumerable<TPrimaryKey> ids, bool deleted) {
 			var uow = UnitOfWork;
 			using (uow.Scope())
 			using (uow.DisableQueryFilter(typeof(DeletedFilter))) {
@@ -143,7 +139,7 @@ namespace Surpass.Domain.Services.Bases {
 		/// <summary>
 		/// 批量永久删除
 		/// </summary>
-		public virtual long BatchDeleteForever(IEnumerable<TPrimaryKey> ids) {
+		public long BatchDeleteForever(IEnumerable<TPrimaryKey> ids) {
 			var uow = UnitOfWork;
 			using (uow.Scope())
 			using (uow.DisableQueryFilter(typeof(DeletedFilter))) {

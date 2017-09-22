@@ -21,7 +21,7 @@ namespace Surpass.Database {
 	///		}
 	///
 	///		public void AfterSave(IDatabaseContext context, ExampleTable data) {
-	///			var logManager = Application.Ioc.Resolve&lt;LogManager&gt;();
+	///			var logManager = Application.Provider.Resolve&lt;LogManager&gt;();
 	///			if (IdBeforeSave &lt;= 0) {
 	///				logManager.LogDebug(string.Format("example data inserted, id is {0}", data.Id));
 	///			} else if (NameBeforeSave != data.Name) {
@@ -33,7 +33,7 @@ namespace Surpass.Database {
 	///		}
 	///
 	///		public void AfterDelete(IDatabaseContext context, ExampleTable data) {
-	///			var logManager = Application.Ioc.Resolve&lt;LogManager&gt;();
+	///			var logManager = Application.Provider.Resolve&lt;LogManager&gt;();
 	///			logManager.LogDebug(string.Format("example data deleted, id is {0}", data.Id));
 	///		}
 	/// }

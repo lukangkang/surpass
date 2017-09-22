@@ -7,7 +7,7 @@
 	/// Example of reading template file<br/>
 	/// 读取模板文件的例子<br/>
 	/// <code language="cs">
-	/// var fileStorage = Application.Ioc.Resolve&lt;IFileStorage&gt;();
+	/// var fileStorage = Application.Provider.Resolve&lt;IFileStorage&gt;();
 	/// var fileEntry = fileStorage.GetTemplateFile("abc.html");
 	/// var contents = fileEntry.ReadAllText();
 	/// </code>
@@ -15,7 +15,7 @@
 	/// Example of reading source file<br/>
 	/// 获取资源文件的例子<br/>
 	/// <code language="cs">
-	/// var fileStorage = Application.Ioc.Resolve&lt;IFileStorage&gt;();
+	/// var fileStorage = Application.Provider.Resolve&lt;IFileStorage&gt;();
 	/// var fileEntry = fileStorage.GetResourceFile("abc.jpg");
 	/// using (var stream = fileEntry.OpenRead()) { }
 	/// </code>
@@ -23,7 +23,7 @@
 	/// Example of saving storage file<br/>
 	/// 写入储存文件的例子<br/>
 	/// <code language="cs">
-	/// var fileStorage = Application.Ioc.Resolve&lt;IFileStorage&gt;();
+	/// var fileStorage = Application.Provider.Resolve&lt;IFileStorage&gt;();
 	/// var fileEntry = fileStorage.GetStorageFile("static", "abc.txt");
 	/// fileEntry.WriteAllText("test storage file");
 	/// </code>
@@ -31,7 +31,7 @@
 	/// Example of listing files under storage directory (not recursive)<br/>
 	/// 列出储存文件夹下的文件的例子(非递归)<br/>
 	/// <code language = "cs">
-	/// var fileStorage = Application.Ioc.Resolve&lt;IFileStorage&gt;();
+	/// var fileStorage = Application.Provider.Resolve&lt;IFileStorage&gt;();
 	/// var directoryEntry = fileStorage.GetStorageDirectory("static");
 	/// var childFiles = directoryEntry.EnumerateFiles();
 	/// foreach (var file in childFiles) {

@@ -42,7 +42,7 @@ namespace Surpass.Plugin {
 		/// <param name="info">Plugin information</param>
 		/// <returns></returns>
 		public static string BinDirectory(this PluginInfo info) {
-			var compilerService = Application.Ioc.GetService<ICompilerService>();
+			var compilerService = Application.Provider.GetService<ICompilerService>();
 			return Path.Combine(info.Directory, "bin", compilerService.TargetPlatform);
 		}
 
@@ -103,7 +103,7 @@ namespace Surpass.Plugin {
 		/// <param name="assemblyName">Assembly name</param>
 		/// <returns></returns>
 		public static string ReferenceAssemblyPath(this PluginInfo info, string assemblyName) {
-			var compilerService = Application.Ioc.GetService<ICompilerService>();
+			var compilerService = Application.Provider.GetService<ICompilerService>();
 			var platform = compilerService.TargetPlatform;
 			var paths = new List<string>() {
 				Path.Combine(info.Directory, "references", platform, $"{assemblyName}.dll"),
@@ -147,7 +147,7 @@ namespace Surpass.Plugin {
 			var assemblyPdbPath = info.AssemblyPdbPath();
 			var compileInfoPath = info.CompileInfoPath();
 			// Load reference assemblies
-			var assemblyLoader = Application.Ioc.GetService<IAssemblyLoader>();
+			var assemblyLoader = Application.Provider.GetService<IAssemblyLoader>();
 			foreach (var reference in info.References) {
 				assemblyLoader.Load(reference);
 			}
@@ -175,10 +175,10 @@ namespace Surpass.Plugin {
 				// Invoke compile service
 				// Default use debug configuration
 				Directory.CreateDirectory(Path.GetDirectoryName(assemblyPath));
-				//var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+				//var configManager = Application.Provider.Resolve<WebsiteConfigManager>();
 				//var release = configManager.WebsiteConfig.Extra.GetOrDefault<bool?>(
 				//	ExtraConfigKeys.CompilePluginsWithReleaseConfiguration) ?? false;
-				var compilerService = Application.Ioc.GetService<ICompilerService>();
+				var compilerService = Application.Provider.GetService<ICompilerService>();
 				var options = new CompilationOptions();
 				//options.Release = release;
 				options.GeneratePdbFile = true;

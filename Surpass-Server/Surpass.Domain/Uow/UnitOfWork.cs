@@ -45,10 +45,10 @@ namespace Surpass.Domain.Uow
 		    /// </summary>
 		    public ScopeData()
 		    {
-		        var databaseManager = Application.Ioc.GetService<DatabaseManager>();
+		        var databaseManager = Application.Provider.GetService<DatabaseManager>();
 		        Context = databaseManager.CreateContext();
-		        QueryFilters = Application.Ioc.GetServices<IEntityQueryFilter>().ToList();
-		        OperationFilters = Application.Ioc.GetServices<IEntityOperationFilter>().ToList();
+		        QueryFilters = Application.Provider.GetServices<IEntityQueryFilter>().ToList();
+		        OperationFilters = Application.Provider.GetServices<IEntityOperationFilter>().ToList();
 		    }
 
             /// <summary>

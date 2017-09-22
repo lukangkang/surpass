@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,6 +30,11 @@ namespace Surpass.Infrastructure.Server
         IServiceCollection Services { get; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        IServiceProvider Provider { get; set; }
+
+        /// <summary>
         /// In progress requests<br/>
         /// 处理中的请求数量<br/>
         /// </summary>
@@ -36,11 +42,17 @@ namespace Surpass.Infrastructure.Server
 
         /// <summary>
         /// Intialize main application<br/>
-        /// 初始化主应用<br/>
+        /// 注册Surpass中间件<br/>
         /// </summary>
         /// <param name="services"></param>
+        void AddSurpass(IServiceCollection services);
+
+        /// <summary>
+        /// 使用Surpass中间件
+        /// </summary>
+        /// <param name="app"></param>
         /// <param name="websiteRootDirectory"></param>
-        void Initialize(IServiceCollection services,string websiteRootDirectory);
+        void UseSurpass(IApplicationBuilder app, string websiteRootDirectory);
 
         /// <summary>
         /// Handle http request<br/>

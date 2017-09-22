@@ -81,7 +81,7 @@ namespace Surpass.Plugin.AssemblyLoaders {
 					return Assembly.Load(assemblyName);
 				} catch {
 					// if failed, try to load it from reference directory under plugin directory
-					//var pluginManager = Application.Ioc.Resolve<PluginManager>();
+					//var pluginManager = Application.Provider.Resolve<PluginManager>();
 					//foreach (var plugin in pluginManager.Plugins) {
 					//	var path = plugin.ReferenceAssemblyPath(assemblyName.Name);
 					//	if (path != null) {

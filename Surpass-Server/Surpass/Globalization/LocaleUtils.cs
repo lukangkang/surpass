@@ -27,7 +27,7 @@ namespace Surpass.Globalization {
         /// <summary>
         /// 当前的HttpContext
         /// </summary>
-	    private static readonly HttpContext Context = Application.Ioc.GetService<IHttpContextAccessor>().HttpContext;
+	    private static readonly HttpContext Context = Application.Provider.GetService<IHttpContextAccessor>().HttpContext;
         /// <summary>
         /// Cache for cluture information<br/>
         /// CultureInfo的缓存<br/>

@@ -103,7 +103,7 @@
 //				}
 //			}
 //			// Try to load Assembly from plugin's reference directory
-//			//var pluginManager = Application.Ioc.Resolve<PluginManager>();
+//			//var pluginManager = Application.Provider.Resolve<PluginManager>();
 //			//foreach (var plugin in pluginManager.Plugins) {
 //			//	var path = plugin.ReferenceAssemblyPath(requireName.Name);
 //			//	if (path != null) {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Surpass.Database;
 using Surpass.Domain.Repositories.Interfaces;
@@ -16,13 +17,13 @@ namespace Surpass.Domain.Repositories
         /// <summary>
 		/// 获取工作单元
 		/// </summary>
-		protected virtual IUnitOfWork UnitOfWork => Application.Ioc.GetService<IUnitOfWork>();
+		protected IUnitOfWork UnitOfWork => Application.Provider.GetService<IUnitOfWork>();
 
         /// <summary>
         /// 查询实体
         /// 受这些过滤器的影响: 查询过滤器
         /// </summary>
-        public virtual IQueryable<TEntity> Query()
+        public IQueryable<TEntity> Query()
         {
             var uow = UnitOfWork;
             var query = uow.Context.Query<TEntity>();
@@ -33,7 +34,7 @@ namespace Surpass.Domain.Repositories
         /// 获取符合条件的单个实体
         /// 受这些过滤器的影响: 查询过滤器
         /// </summary>
-        public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate)
+        public TEntity Get(Expression<Func<TEntity, bool>> predicate)
         {
             return Query().FirstOrDefault(predicate);
         }
@@ -51,7 +52,7 @@ namespace Surpass.Domain.Repositories
         /// 添加或更新实体
         /// 受这些过滤器的影响: 操作过滤器
         /// </summary>
-        public virtual void Save(ref TEntity entity, Action<TEntity> update = null)
+        public void Save(ref TEntity entity, Action<TEntity> update = null)
         {
             var uow = UnitOfWork;
             update = uow.WrapUpdateMethod<TEntity, TPrimaryKey>(update);
@@ -62,7 +63,7 @@ namespace Surpass.Domain.Repositories
         /// 删除实体
         /// 受这些过滤器的影响: 操作过滤器
         /// </summary>
-        public virtual void Delete(TEntity entity)
+        public void Delete(TEntity entity)
         {
             var uow = UnitOfWork;
             uow.WrapBeforeDeleteMethod<TEntity, TPrimaryKey>(e => { })(entity);
@@ -73,7 +74,7 @@ namespace Surpass.Domain.Repositories
         /// 批量保存实体
         /// 受这些过滤器的影响: 操作过滤器
         /// </summary>
-        public virtual void BatchSave(
+        public void BatchSave(
             ref IEnumerable<TEntity> entities, Action<TEntity> update = null)
         {
             var uow = UnitOfWork;
@@ -85,7 +86,7 @@ namespace Surpass.Domain.Repositories
         /// 批量更新实体
         /// 受这些过滤器的影响: 查询过滤器, 操作过滤器
         /// </summary>
-        public virtual long BatchUpdate(
+        public long BatchUpdate(
             Expression<Func<TEntity, bool>> predicate, Action<TEntity> update)
         {
             var uow = UnitOfWork;
@@ -98,7 +99,7 @@ namespace Surpass.Domain.Repositories
         /// 批量删除实体
         /// 受这些过滤器的影响: 查询过滤器, 操作过滤器
         /// </summary>
-        public virtual long BatchDelete(
+        public long BatchDelete(
             Expression<Func<TEntity, bool>> predicate, Action<TEntity> beforeDelete)
         {
             var uow = UnitOfWork;
